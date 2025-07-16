@@ -6,6 +6,7 @@ import (
 	"net"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -50,10 +51,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	conn.SetReadDeadline(time.Now().Add(2 * time.Second))
 	buf := make([]byte, 4096)
 	n, err := conn.Read(buf)
 	if err != nil {
-		fmt.Println("Error reading response:", err)
+		fmt.Println("Error reading response (timeout or connection closed):", err)
 		os.Exit(1)
 	}
 	fmt.Print(string(buf[:n]))
@@ -63,7 +65,7 @@ func printHelp() {
 	fmt.Println("mini-redis-cli - Available commands:")
 	fmt.Println("  PING                   - Test the connection with the server")
 	fmt.Println("  ECHO <message>         - Echo back the provided message")
-	fmt.Println("  SET <key> <value> [PX milliseconds] - Set a value for a key, optionally with expiration in ms (PX)")
+	fmt.Println("  SET <key> <value> [PX <milliseconds>] - Set a value for a key, optionally with expiration in ms (PX)")
 	fmt.Println("  GET <key>              - Get the value of a key")
 	fmt.Println("  CONFIG <subcommand>    - Manage server configuration")
 	fmt.Println("  KEYS <pattern>         - List keys matching the pattern")

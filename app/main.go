@@ -53,6 +53,7 @@ func main() {
 	for {
 		conn, err := l.Accept()
 		if err != nil {
+			fmt.Println(err.Error())
 			continue
 		}
 
