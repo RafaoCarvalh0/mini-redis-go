@@ -36,4 +36,4 @@ Thumbs.db
 .env
 
 # Go module cache
-/go.sum
+go.sum
