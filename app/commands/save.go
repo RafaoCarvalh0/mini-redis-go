@@ -25,8 +25,16 @@ func handleSave(_ []string, store map[string]Entry, config server_config.ServerC
 	}
 
 	dbFilePath := filepath.Join(config.Dir, config.DBFileName)
-	if err := writeRDBSnapshot(store, dbFilePath); err != nil {
+	tempFilePath := dbFilePath + ".tmp"
+
+	if err := writeRDBSnapshot(store, tempFilePath); err != nil {
+		os.Remove(tempFilePath)
 		return RedisError("could not save snapshot: " + err.Error())
+	}
+
+	if err := os.Rename(tempFilePath, dbFilePath); err != nil {
+		os.Remove(tempFilePath)
+		return RedisError("could not finalize snapshot: " + err.Error())
 	}
 
 	return "+OK\r\n"
