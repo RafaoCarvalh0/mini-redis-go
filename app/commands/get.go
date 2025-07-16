@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/codecrafters-io/redis-starter-go/app/server_config"
+	"mini-redis-go/app/server_config"
 )
 
 func handleGet(args []string, store map[string]Entry, config server_config.ServerConfig) string {

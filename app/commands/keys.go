@@ -6,11 +6,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/codecrafters-io/redis-starter-go/app/server_config"
+	"mini-redis-go/app/server_config"
 )
 
 func handleKeys(args []string, _ map[string]Entry, config server_config.ServerConfig) string {
-
 	if err := validateKeysCommand(args); err != nil {
 		return RedisError(err.Error())
 	}
