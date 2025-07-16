@@ -23,6 +23,7 @@ var commandHandlers = map[string]func([]string, map[string]Entry, server_config.
 	"CONFIG": handleConfig,
 	"KEYS":   handleKeys,
 	"SAVE":   handleSave,
+	"DEL":    handleDel,
 }
 
 func HandleCommand(args []string, store map[string]Entry, config server_config.ServerConfig) (string, bool) {

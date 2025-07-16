@@ -67,6 +67,7 @@ func printHelp() {
 	fmt.Println("  ECHO <message>         - Echo back the provided message")
 	fmt.Println("  SET <key> <value> [PX <milliseconds>] - Set a value for a key, optionally with expiration in ms (PX)")
 	fmt.Println("  GET <key>              - Get the value of a key")
+	fmt.Println("  DEL <key> [key ...]    - Delete one or more keys")
 	fmt.Println("  CONFIG <subcommand>    - Manage server configuration")
 	fmt.Println("  KEYS <pattern>         - List keys matching the pattern")
 	fmt.Println("  SAVE                   - Save the current dataset to disk")
