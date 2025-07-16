@@ -34,3 +34,6 @@ Thumbs.db
 
 # Environment files
 .env
+
+# Example dumps
+example_dump.rdb
