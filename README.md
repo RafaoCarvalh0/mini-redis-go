@@ -60,14 +60,32 @@ You can customize host, port, data directory, and db filename with flags or envi
 go run . --host 0.0.0.0 --port 6379 --dir "../" --dbfilename "template_dump.rdb"
 ```
 
+## Compiling the CLI
+
+From the project root, run:
+
+**On Windows:**
+```sh
+go build -o mini-redis-cli.exe cli/mini_redis_go_cli.go
+```
+
+**On Linux/Mac:**
+```sh
+go build -o mini-redis-cli cli/mini_redis_go_cli.go
+```
+
+This will generate the executable in the project root. You can then use it as described in the section below.
+
 ## Running the CLI
 
-The CLI binary (`mini-redis-cli.exe`) is already built and available in the project root. You can use it directly to send commands:
-
+On Linux:
 ```sh
-./mini-redis-cli SET foo bar
-./mini-redis-cli GET foo
-./mini-redis-cli SET temp value PX 5000
+./mini-redis-cli help
+```
+
+On windows:
+```sh
+mini-redis-cli.exe help
 ```
 
 You can also specify host and port:
@@ -79,15 +97,6 @@ You can also specify host and port:
 > 
 > The CLI **must use the same host and port as the server**. If you started the server with custom `--host` or `--port` values, use the same values when running the CLI. Otherwise, the connection will fail.
 
-## Supported commands
-
-- `PING`                   - Test the connection with the server
-- `ECHO <message>`         - Echo back the provided message
-- `SET <key> <value> [PX milliseconds]` - Set a value for a key, optionally with expiration in ms (PX)
-- `GET <key>`              - Get the value of a key
-- `CONFIG <subcommand>`    - Manage server configuration
-- `KEYS <pattern>`         - List keys matching the pattern
-- `SAVE`                   - Save the current dataset to disk
 
 ## Notes
 
