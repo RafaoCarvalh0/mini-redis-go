@@ -10,8 +10,8 @@ import (
 func handleSet(args []string, store *map[string]Entry, _ server_config.ServerConfig) string {
 	if len(args) > 0 && strings.ToUpper(args[0]) == "SET" {
 		fmt.Println(args)
-		if len(args) < 3 {
-			return RedisError("wrong number of arguments for 'set' command\r\n")
+		if len(args) != 3 {
+			return RedisError("wrong number of arguments for 'set' command")
 		}
 		key := args[1]
 		value := args[2]
