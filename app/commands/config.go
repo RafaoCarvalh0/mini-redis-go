@@ -22,7 +22,7 @@ func handleConfig(args []string, _ *map[string]Entry, config server_config.Serve
 		return resp
 	}
 
-	return "*0\r\n"
+	return RedisEmptyArray
 }
 
 func validateConfigCommand(args []string) error {
