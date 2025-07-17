@@ -15,19 +15,17 @@ This project is a practical study to get familiar with the Go programming langua
 
 ```
 app/
-  commands/           # Core Redis command handlers (SET, GET, etc)
+  commands/           # Core Redis command handlers (SET, GET, DEL, etc)
   protocol_parser/    # RESP2 protocol parser
   server_config/      # Server configuration logic
   rdb_utils.go        # RDB file handling utilities
+  rdb_constants.go    # RDB format constants
   main.go             # Server entry point
 
 cli/
   mini_redis_go_cli.go # CLI client to send commands to the server
 
-README.md             # Project documentation and usage
-go.mod, go.sum        # Go module dependencies
-.env                  # (Optional) Environment variables for host/port
-template_dump.rdb     # Example RDB file for persistence
+example_dump.rdb      # Example RDB file for persistence (gitignored)
 ```
 
 ## Requirements
