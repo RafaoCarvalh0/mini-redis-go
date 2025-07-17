@@ -57,11 +57,11 @@ func main() {
 			continue
 		}
 
-		go handleConnection(conn, store, config)
+		go handleConnection(conn, &store, config)
 	}
 }
 
-func handleConnection(conn net.Conn, store map[string]commands.Entry, config server_config.ServerConfig) {
+func handleConnection(conn net.Conn, store *map[string]commands.Entry, config server_config.ServerConfig) {
 	defer conn.Close()
 	for {
 		args, err := protocol_parser.GetRESP2ArgsFromConn(conn)

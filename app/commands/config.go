@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func handleConfig(args []string, _ map[string]Entry, config server_config.ServerConfig) string {
+func handleConfig(args []string, _ *map[string]Entry, config server_config.ServerConfig) string {
 	if err := validateConfigCommand(args); err != nil {
 		return RedisError(err.Error())
 	}

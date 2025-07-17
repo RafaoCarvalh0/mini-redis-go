@@ -15,7 +15,7 @@ const (
 	length32BitTag = 0x80
 )
 
-func handleSave(_ []string, store map[string]Entry, config server_config.ServerConfig) string {
+func handleSave(_ []string, store *map[string]Entry, config server_config.ServerConfig) string {
 	if config.Dir == "" || config.DBFileName == "" {
 		return RedisError("no directory or dbfilename provided")
 	}
@@ -27,7 +27,7 @@ func handleSave(_ []string, store map[string]Entry, config server_config.ServerC
 	dbFilePath := filepath.Join(config.Dir, config.DBFileName)
 	tempFilePath := dbFilePath + ".tmp"
 
-	if err := writeRDBSnapshot(store, tempFilePath); err != nil {
+	if err := writeRDBSnapshot(*store, tempFilePath); err != nil {
 		os.Remove(tempFilePath)
 		return RedisError("could not save snapshot: " + err.Error())
 	}
