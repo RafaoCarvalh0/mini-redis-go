@@ -1,7 +1,16 @@
 package commands
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func RedisError(errMsg string) string {
-	return fmt.Sprintf("-ERR %s\r\n", errMsg)
+	finalMsg := errMsg
+
+	if strings.Trim(errMsg, " ") == "" {
+		finalMsg = "unknown error"
+	}
+
+	return fmt.Sprintf("-ERR %s\r\n", finalMsg)
 }
