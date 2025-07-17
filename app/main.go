@@ -36,7 +36,7 @@ func main() {
 
 	config := server_config.GetServerConfig(dir, dbfilename)
 
-	store, err := loadRDB(config)
+	store, err := loadDataFromRDB(config)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)

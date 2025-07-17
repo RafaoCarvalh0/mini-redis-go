@@ -9,7 +9,7 @@ import (
 	"mini-redis-go/app/server_config"
 )
 
-func loadRDB(config server_config.ServerConfig) (map[string]commands.Entry, error) {
+func loadDataFromRDB(config server_config.ServerConfig) (map[string]commands.Entry, error) {
 	store := make(map[string]commands.Entry)
 
 	if config.Dir != "" && config.DBFileName != "" {
