@@ -1,5 +1,7 @@
 # mini-redis-go
 
+[![Tests](https://github.com/RafaoCarvalh0/mini-redis-go/workflows/Tests/badge.svg)](https://github.com/yourusername/mini-redis-go/actions)
+
 This project is a practical study to get familiar with the Go programming language and to understand the internal workings of a minimalist Redis server. The main goal is to explore concepts such as networking, binary protocols (RESP2), file handling, and data structures in Go, as well as to learn about persistence and client-server communication.
 
 **Note:** This implementation currently saves and loads only string values.
