@@ -60,6 +60,8 @@ func TestHandleCommand(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			got, got1 := HandleCommand(tt.args.args, tt.args.store, tt.args.config)
 			if got != tt.want {
 				t.Errorf("HandleCommand() got = %v, want %v", got, tt.want)

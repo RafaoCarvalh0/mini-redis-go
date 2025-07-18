@@ -56,6 +56,8 @@ func Test_handlePing(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			if got := handlePing(tt.args.args, tt.args.store, tt.args.config); got != tt.want {
 				t.Errorf("handlePing() = %v, want %v", got, tt.want)
 			}

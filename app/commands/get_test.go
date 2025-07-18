@@ -64,6 +64,8 @@ func Test_handleGet(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			if got := handleGet(tt.args.args, tt.args.store, tt.args.config); got != tt.want {
 				t.Errorf("handleGet() = %v, want %v", got, tt.want)
 			}

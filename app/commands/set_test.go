@@ -74,6 +74,8 @@ func Test_handleSet(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			if got := handleSet(tt.args.args, tt.args.store, tt.args.config); got != tt.want {
 				t.Errorf("handleSet() = %v, want %v", got, tt.want)
 			}
