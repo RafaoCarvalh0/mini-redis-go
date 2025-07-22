@@ -8,7 +8,7 @@ import (
 func TestHandleCommand(t *testing.T) {
 	type args struct {
 		args   []string
-		store  *map[string]Entry
+		store  map[string]Entry
 		config server_config.ServerConfig
 	}
 	tests := []struct {
@@ -21,7 +21,7 @@ func TestHandleCommand(t *testing.T) {
 			name: "returns PONG for PING command",
 			args: args{
 				args:   []string{"PING"},
-				store:  &map[string]Entry{},
+				store:  map[string]Entry{},
 				config: server_config.ServerConfig{},
 			},
 			want:  "+PONG\r\n",
@@ -31,7 +31,7 @@ func TestHandleCommand(t *testing.T) {
 			name: "returns value for GET command",
 			args: args{
 				args:   []string{"GET", "foo"},
-				store:  &map[string]Entry{"foo": {Value: "bar", ExpiryTime: 0}},
+				store:  map[string]Entry{"foo": {Value: "bar", ExpiryTime: 0}},
 				config: server_config.ServerConfig{},
 			},
 			want:  "$3\r\nbar\r\n",
@@ -41,7 +41,7 @@ func TestHandleCommand(t *testing.T) {
 			name: "returns OK for SET command",
 			args: args{
 				args:   []string{"SET", "foo", "bar"},
-				store:  &map[string]Entry{},
+				store:  map[string]Entry{},
 				config: server_config.ServerConfig{},
 			},
 			want:  "+OK\r\n",
@@ -51,7 +51,7 @@ func TestHandleCommand(t *testing.T) {
 			name: "returns error for unknown command",
 			args: args{
 				args:   []string{"FOOBAR"},
-				store:  &map[string]Entry{},
+				store:  map[string]Entry{},
 				config: server_config.ServerConfig{},
 			},
 			want:  "-ERR unknown command 'FOOBAR'\r\n",

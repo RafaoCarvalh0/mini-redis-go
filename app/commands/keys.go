@@ -5,7 +5,7 @@ import (
 	"mini-redis-go/app/server_config"
 )
 
-func handleKeys(args []string, store *map[string]Entry, config server_config.ServerConfig) string {
+func handleKeys(args []string, store map[string]Entry, config server_config.ServerConfig) string {
 	if err := validateKeysCommand(args); err != nil {
 		return RedisError(err.Error())
 	}
@@ -16,7 +16,7 @@ func handleKeys(args []string, store *map[string]Entry, config server_config.Ser
 	}
 
 	var keys []string
-	for key := range *store {
+	for key := range store {
 		keys = append(keys, key)
 	}
 

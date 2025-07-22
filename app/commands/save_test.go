@@ -10,7 +10,7 @@ import (
 func Test_handleSave(t *testing.T) {
 	type args struct {
 		args   []string
-		store  *map[string]Entry
+		store  map[string]Entry
 		config server_config.ServerConfig
 	}
 	type testCase struct {
@@ -25,7 +25,7 @@ func Test_handleSave(t *testing.T) {
 			name: "returns error when directory or dbfilename is missing",
 			args: args{
 				args:   []string{"SAVE"},
-				store:  &map[string]Entry{"foo": {Value: "bar", ExpiryTime: 0}},
+				store:  map[string]Entry{"foo": {Value: "bar", ExpiryTime: 0}},
 				config: server_config.ServerConfig{Dir: "", DBFileName: ""},
 			},
 			want: "-ERR no directory or dbfilename provided\r\n",
@@ -34,7 +34,7 @@ func Test_handleSave(t *testing.T) {
 			name: "returns OK and saved file contains header and version",
 			args: args{
 				args:   []string{"SAVE"},
-				store:  &map[string]Entry{"foo": {Value: "bar", ExpiryTime: 0}},
+				store:  map[string]Entry{"foo": {Value: "bar", ExpiryTime: 0}},
 				config: server_config.ServerConfig{},
 			},
 			want: "+OK\r\n",

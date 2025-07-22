@@ -8,7 +8,7 @@ import (
 func Test_handleEcho(t *testing.T) {
 	type args struct {
 		args   []string
-		store  *map[string]Entry
+		store  map[string]Entry
 		config server_config.ServerConfig
 	}
 	tests := []struct {
@@ -21,7 +21,7 @@ func Test_handleEcho(t *testing.T) {
 			name: "returns provided ECHO message in RESP2 format",
 			args: args{
 				args:   []string{"ECHO", "foo"},
-				store:  &map[string]Entry{},
+				store:  map[string]Entry{},
 				config: server_config.ServerConfig{},
 			},
 			want: "$3\r\nfoo\r\n",
@@ -30,12 +30,12 @@ func Test_handleEcho(t *testing.T) {
 			name: "returns provided ECHO message with the correct count of characters after $ sign",
 			args: args{
 				args:   []string{"ECHO", "foobar"},
-				store:  &map[string]Entry{},
+				store:  map[string]Entry{},
 				config: server_config.ServerConfig{},
 			},
 			want: "$6\r\nfoobar\r\n",
 			checkCharactesCount: func(t *testing.T, args []string) {
-				got := handleEcho(args, &map[string]Entry{}, server_config.ServerConfig{})
+				got := handleEcho(args, map[string]Entry{}, server_config.ServerConfig{})
 				if len(got) < 2 || got[0] != '$' {
 					t.Errorf("unexpected format: %q", got)
 					return
@@ -56,7 +56,7 @@ func Test_handleEcho(t *testing.T) {
 			name: "returns wrong number of arguments error when more than 2 arguments are provided",
 			args: args{
 				args:   []string{"ECHO", "foo", "bar"},
-				store:  &map[string]Entry{},
+				store:  map[string]Entry{},
 				config: server_config.ServerConfig{},
 			},
 			want: "-ERR wrong number of arguments for 'echo' command\r\n",

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func handleEcho(args []string, _ *map[string]Entry, _ server_config.ServerConfig) string {
+func handleEcho(args []string, _ map[string]Entry, _ server_config.ServerConfig) string {
 	if strings.ToUpper(args[0]) == "ECHO" {
 		if len(args) == 2 {
 			msg := args[1]

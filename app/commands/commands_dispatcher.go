@@ -12,7 +12,7 @@ type Entry struct {
 	ExpiryTime int64
 }
 
-var commandHandlers = map[string]func([]string, *map[string]Entry, server_config.ServerConfig) string{
+var commandHandlers = map[string]func([]string, map[string]Entry, server_config.ServerConfig) string{
 	"PING":   handlePing,
 	"ECHO":   handleEcho,
 	"SET":    handleSet,
@@ -23,7 +23,7 @@ var commandHandlers = map[string]func([]string, *map[string]Entry, server_config
 	"DEL":    handleDel,
 }
 
-func HandleCommand(args []string, store *map[string]Entry, config server_config.ServerConfig) (string, bool) {
+func HandleCommand(args []string, store map[string]Entry, config server_config.ServerConfig) (string, bool) {
 	command := strings.ToUpper(args[0])
 
 	if handler, isCommandHandled := commandHandlers[command]; isCommandHandled {

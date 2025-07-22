@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func handleSet(args []string, store *map[string]Entry, _ server_config.ServerConfig) string {
+func handleSet(args []string, store map[string]Entry, _ server_config.ServerConfig) string {
 	if len(args) > 0 && strings.ToUpper(args[0]) == "SET" {
 		fmt.Println(args)
 		if len(args) != 3 {
@@ -25,7 +25,7 @@ func handleSet(args []string, store *map[string]Entry, _ server_config.ServerCon
 			expiry = time.Now().UnixMilli() + ms
 		}
 
-		(*store)[key] = Entry{Value: value, ExpiryTime: expiry}
+		store[key] = Entry{Value: value, ExpiryTime: expiry}
 		return "+OK\r\n"
 	}
 

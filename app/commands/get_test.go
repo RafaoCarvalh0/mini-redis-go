@@ -8,14 +8,14 @@ import (
 func Test_handleGet(t *testing.T) {
 	type args struct {
 		args   []string
-		store  *map[string]Entry
+		store  map[string]Entry
 		config server_config.ServerConfig
 	}
 	type testCase struct {
 		name       string
 		args       args
 		want       string
-		checkStore func(t *testing.T, store *map[string]Entry)
+		checkStore func(t *testing.T, store map[string]Entry)
 	}
 
 	tests := []testCase{
@@ -23,7 +23,7 @@ func Test_handleGet(t *testing.T) {
 			name: "returns value in RESP2 format when key exists and is not expired",
 			args: args{
 				args:   []string{"GET", "foo"},
-				store:  &map[string]Entry{"foo": {Value: "bar", ExpiryTime: 0}},
+				store:  map[string]Entry{"foo": {Value: "bar", ExpiryTime: 0}},
 				config: server_config.ServerConfig{},
 			},
 			want: "$3\r\nbar\r\n",
@@ -32,7 +32,7 @@ func Test_handleGet(t *testing.T) {
 			name: "returns error when not enough arguments are provided",
 			args: args{
 				args:   []string{"GET"},
-				store:  &map[string]Entry{},
+				store:  map[string]Entry{},
 				config: server_config.ServerConfig{},
 			},
 			want: "-ERR wrong number of arguments for 'get' command\r\n",
@@ -41,7 +41,7 @@ func Test_handleGet(t *testing.T) {
 			name: "returns $-1 when key does not exist",
 			args: args{
 				args:   []string{"GET", "missing"},
-				store:  &map[string]Entry{"foo": {Value: "bar", ExpiryTime: 0}},
+				store:  map[string]Entry{"foo": {Value: "bar", ExpiryTime: 0}},
 				config: server_config.ServerConfig{},
 			},
 			want: "$-1\r\n",
@@ -50,12 +50,12 @@ func Test_handleGet(t *testing.T) {
 			name: "returns $-1 and deletes key when key is expired",
 			args: args{
 				args:   []string{"GET", "foo"},
-				store:  &map[string]Entry{"foo": {Value: "bar", ExpiryTime: 1}},
+				store:  map[string]Entry{"foo": {Value: "bar", ExpiryTime: 1}},
 				config: server_config.ServerConfig{},
 			},
 			want: "$-1\r\n",
-			checkStore: func(t *testing.T, store *map[string]Entry) {
-				if _, ok := (*store)["foo"]; ok {
+			checkStore: func(t *testing.T, store map[string]Entry) {
+				if _, ok := store["foo"]; ok {
 					t.Errorf("expected key 'foo' to be deleted from store")
 				}
 			},
