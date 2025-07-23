@@ -12,10 +12,9 @@ func Test_handleGet(t *testing.T) {
 		config server_config.ServerConfig
 	}
 	type testCase struct {
-		name       string
-		args       args
-		want       string
-		checkStore func(t *testing.T, store map[string]Entry)
+		name string
+		args args
+		want string
 	}
 
 	tests := []testCase{
@@ -46,20 +45,6 @@ func Test_handleGet(t *testing.T) {
 			},
 			want: "$-1\r\n",
 		},
-		{
-			name: "returns $-1 and deletes key when key is expired",
-			args: args{
-				args:   []string{"GET", "foo"},
-				store:  map[string]Entry{"foo": {Value: "bar", ExpiryTime: 1}},
-				config: server_config.ServerConfig{},
-			},
-			want: "$-1\r\n",
-			checkStore: func(t *testing.T, store map[string]Entry) {
-				if _, ok := store["foo"]; ok {
-					t.Errorf("expected key 'foo' to be deleted from store")
-				}
-			},
-		},
 	}
 
 	for _, tt := range tests {
@@ -69,9 +54,22 @@ func Test_handleGet(t *testing.T) {
 			if got := handleGet(tt.args.args, tt.args.store, tt.args.config); got != tt.want {
 				t.Errorf("handleGet() = %v, want %v", got, tt.want)
 			}
-			if tt.checkStore != nil {
-				tt.checkStore(t, tt.args.store)
-			}
 		})
+	}
+}
+
+func Test_handleGet_checkExpiredKeyWasDeletedFromStore(t *testing.T) {
+	t.Parallel()
+
+	expiredKey := "foo"
+
+	args := []string{"GET", expiredKey}
+
+	store := map[string]Entry{"foo": {Value: "bar", ExpiryTime: 1}}
+
+	handleGet(args, store, server_config.ServerConfig{})
+
+	if _, keyFound := store[expiredKey]; keyFound {
+		t.Errorf("handleGet() = not deleting expired keys")
 	}
 }

@@ -12,11 +12,11 @@ func Test_handleSet(t *testing.T) {
 		config server_config.ServerConfig
 	}
 	type testCase struct {
-		name       string
-		args       args
-		want       string
-		checkStore func(t *testing.T, store map[string]Entry)
+		name string
+		args args
+		want string
 	}
+
 	tests := []testCase{
 		{
 			name: "stores a new key value pair",
@@ -28,14 +28,6 @@ func Test_handleSet(t *testing.T) {
 				config: server_config.ServerConfig{},
 			},
 			want: "+OK\r\n",
-			checkStore: func(t *testing.T, store map[string]Entry) {
-				entry, ok := store["foo"]
-				if !ok {
-					t.Errorf("store should contain key 'foo'")
-				} else if entry.Value != "bar" {
-					t.Errorf("store[\"foo\"] = %v, want %v", entry.Value, "bar")
-				}
-			},
 		},
 		{
 			name: "returns wrong number of arguments error when more than 3 arguments are provided",
@@ -79,9 +71,23 @@ func Test_handleSet(t *testing.T) {
 			if got := handleSet(tt.args.args, tt.args.store, tt.args.config); got != tt.want {
 				t.Errorf("handleSet() = %v, want %v", got, tt.want)
 			}
-			if tt.checkStore != nil {
-				tt.checkStore(t, tt.args.store)
-			}
 		})
+	}
+}
+
+func Test_handleSet_StoreUpdate(t *testing.T) {
+	store := map[string]Entry{
+		"key1": {Value: "value1", ExpiryTime: 0},
+	}
+	config := server_config.ServerConfig{}
+	args := []string{"SET", "foo", "bar"}
+
+	handleSet(args, store, config)
+
+	entry, ok := store["foo"]
+	if !ok {
+		t.Errorf("store should contain key 'foo'")
+	} else if entry.Value != "bar" {
+		t.Errorf("store[\"foo\"] = %v, want %v", entry.Value, "bar")
 	}
 }
